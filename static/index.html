@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>我们的恋爱小屋</title><link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+  <div class="blobs"><i></i><i></i><i></i></div>
+  <header class="topbar"><a class="brand" href="#home">♥ <span>Our Love</span></a><nav>
+    <a href="#home">首页</a><a href="#days">纪念日</a><a href="#messages">留言</a><a href="#wishes">愿望</a><a href="#moods">心情</a>
+  </nav><button class="ghost" id="settingsBtn">设置</button></header>
+  <main>
+    <section id="home" class="hero">
+      <p class="eyebrow">WELCOME TO OUR STORY</p><h1><span id="name1">你</span> <b>♥</b> <span id="name2">我</span></h1>
+      <p class="subtitle">平凡的日子，因为有你而闪闪发光</p>
+      <div class="love-card"><div><small>我们已经相恋</small><strong><span id="loveDays">0</span> <em>天</em></strong><p id="startDate">从今天开始</p></div><div class="divider"></div><div><small>下一个纪念日</small><strong><span id="countdown">--</span> <em>天</em></strong><p id="nextName">添加一个纪念日吧</p></div></div>
+    </section>
+
+    <section id="days" class="section"><div class="section-head"><div><p class="eyebrow">SPECIAL DAYS</p><h2>值得记住的每一天</h2></div><button class="primary" data-open="anniversaryModal">＋ 添加纪念日</button></div><div id="anniversaryList" class="card-grid"></div></section>
+
+    <section id="messages" class="section"><div class="section-head"><div><p class="eyebrow">LOVE NOTES</p><h2>想对你说的话</h2></div></div>
+      <div class="composer panel"><div class="avatar">♥</div><div><textarea id="messageText" maxlength="300" placeholder="此刻，想对 TA 说点什么……"></textarea><div class="form-foot"><select id="messageSender"></select><span><i id="messageCount">0</i>/300</span><button class="primary" id="sendMessage">发送留言</button></div></div></div><div id="messageList" class="notes"></div>
+    </section>
+
+    <section id="wishes" class="section"><div class="section-head"><div><p class="eyebrow">BUCKET LIST</p><h2>想和你一起完成</h2></div><button class="primary" data-open="wishModal">＋ 添加愿望</button></div><div class="progress panel"><div><b>我们的完成进度</b><span id="wishProgressText">0 / 0</span></div><div class="track"><i id="wishProgress"></i></div></div><div id="wishList" class="wish-list"></div></section>
+
+    <section id="moods" class="section"><div class="section-head"><div><p class="eyebrow">TODAY'S MOOD</p><h2>今天心情怎么样？</h2></div><input type="date" id="moodDate"></div><div id="moodPeople" class="mood-grid"></div></section>
+  </main>
+  <footer>Made with ♥ for us · 愿每个日常都值得珍藏</footer>
+
+  <dialog id="settingsModal"><form method="dialog" id="settingsForm"><button class="close">×</button><p class="eyebrow">OUR PROFILE</p><h3>设置我们的信息</h3><label>第一个名字<input id="person1" required maxlength="30"></label><label>第二个名字<input id="person2" required maxlength="30"></label><label>恋爱开始日期<input id="relationshipStart" type="date" required></label><button class="primary wide" value="default">保存设置</button></form></dialog>
+  <dialog id="anniversaryModal"><form method="dialog" id="anniversaryForm"><button class="close">×</button><p class="eyebrow">NEW MEMORY</p><h3>添加纪念日</h3><label>名称<input id="anniversaryName" required maxlength="60" placeholder="例如：第一次见面"></label><label>日期<input id="anniversaryDate" type="date" required></label><label class="check"><input id="anniversaryYearly" type="checkbox" checked> 每年重复</label><button class="primary wide" value="default">保存纪念日</button></form></dialog>
+  <dialog id="wishModal"><form method="dialog" id="wishForm"><button class="close">×</button><p class="eyebrow">NEW WISH</p><h3>写下一个愿望</h3><label>想一起做的事情<input id="wishContent" required maxlength="200" placeholder="例如：去海边看一次日出"></label><button class="primary wide" value="default">加入愿望清单</button></form></dialog>
+  <div id="toast"></div><script src="/static/app.js"></script>
+</body></html>
+
