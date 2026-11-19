@@ -27,5 +27,8 @@ $('#settingsForm').onsubmit=async e=>{e.preventDefault();await api('/couple',{me
 $('#anniversaryForm').onsubmit=async e=>{e.preventDefault();await api('/anniversaries',{method:'POST',body:JSON.stringify({name:$('#anniversaryName').value,event_date:$('#anniversaryDate').value,yearly:$('#anniversaryYearly').checked})});e.target.reset();$('#anniversaryYearly').checked=true;$('#anniversaryModal').close();loadAnniversaries();toast('纪念日已添加')};
 $('#wishForm').onsubmit=async e=>{e.preventDefault();await api('/wishes',{method:'POST',body:JSON.stringify({content:$('#wishContent').value})});e.target.reset();$('#wishModal').close();loadWishes();toast('愿望已加入清单')};
 $('#messageText').oninput=e=>$('#messageCount').textContent=e.target.value.length;$('#sendMessage').onclick=async()=>{const text=$('#messageText').value.trim();if(!text)return toast('写一句话再发送吧');await api('/messages',{method:'POST',body:JSON.stringify({sender:$('#messageSender').value,content:text})});$('#messageText').value='';$('#messageCount').textContent='0';loadMessages();toast('留言已发送')};
+function openMoodDatePicker(){const input=$('#moodDate');if(typeof input.showPicker==='function')input.showPicker();else input.focus()}
+$('#moodDatePicker').onclick=e=>{if(e.target!==$('#moodDate'))openMoodDatePicker()};
+$('#moodDatePicker').onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();openMoodDatePicker()}};
 $('#moodDate').value=new Date().toLocaleDateString('en-CA');$('#moodDate').onchange=renderMoodPeople;
 (async()=>{try{await refreshAuth();await Promise.all([loadCouple(),loadAnniversaries(),loadMessages(),loadWishes()])}catch(e){toast(e.message)}})();
