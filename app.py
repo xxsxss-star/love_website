@@ -87,7 +87,12 @@ def init_db():
             expires_at TEXT NOT NULL,
             FOREIGN KEY(user_id) REFERENCES users(id) ON DELETE CASCADE
         );
+        CREATE TABLE IF NOT EXISTS settings (
+            key TEXT PRIMARY KEY,
+            value TEXT NOT NULL
+        );
         """)
+        conn.execute("INSERT OR IGNORE INTO settings(key,value) VALUES('theme','blue')")
         for username, password in (
             ("admin1", os.getenv("ADMIN1_PASSWORD", "admin1")),
             ("admin2", os.getenv("ADMIN2_PASSWORD", "admin2")),
@@ -138,6 +143,10 @@ class MoodIn(BaseModel):
 class LoginIn(BaseModel):
     username: Literal["admin1", "admin2"]
     password: str = Field(min_length=1, max_length=128)
+
+
+class ThemeIn(BaseModel):
+    theme: Literal["blue", "pink", "purple", "green"]
 
 
 def utc_now():
@@ -210,6 +219,21 @@ def logout(response: Response, love_session: str | None = Cookie(default=None, a
         with db() as conn:
             conn.execute("DELETE FROM sessions WHERE token=?", (love_session,))
     response.delete_cookie(SESSION_COOKIE)
+
+
+@app.get("/api/settings/theme")
+def get_theme():
+    with db() as conn:
+        row = conn.execute("SELECT value FROM settings WHERE key='theme'").fetchone()
+    return {"theme": row["value"] if row else "blue"}
+
+
+@app.put("/api/settings/theme")
+def save_theme(payload: ThemeIn, _=Depends(require_user)):
+    with db() as conn:
+        conn.execute("""INSERT INTO settings(key,value) VALUES('theme',?)
+            ON CONFLICT(key) DO UPDATE SET value=excluded.value""", (payload.theme,))
+    return {"theme": payload.theme}
 
 
 @app.get("/api/couple")
