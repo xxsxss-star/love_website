@@ -1,4 +1,5 @@
 const $ = s => document.querySelector(s);
+const savedTheme=localStorage.getItem('love-theme')||'blue';document.documentElement.dataset.theme=savedTheme;
 const api = async (path, options={}) => { const r=await fetch('/api'+path,{headers:{'Content-Type':'application/json'},...options}); if(!r.ok){let e;try{e=await r.json()}catch{};if(r.status===401&&path!='/auth/login'){$('#loginModal').showModal()}throw new Error(e?.detail||'操作失败')} return r.status===204?null:r.json() };
 const esc = s => String(s??'').replace(/[&<>'"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[c]));
 const fmt = s => new Date(s+'T00:00:00').toLocaleDateString('zh-CN',{year:'numeric',month:'long',day:'numeric'});
@@ -20,6 +21,9 @@ async function renderMoodPeople(){if(!couple)return;const day=$('#moodDate').val
 
 document.querySelectorAll('[data-open]').forEach(b=>b.onclick=()=>$('#'+b.dataset.open).showModal());$('#settingsBtn').onclick=()=>$('#settingsModal').showModal();
 document.querySelectorAll('dialog .close').forEach(button=>button.onclick=()=>button.closest('dialog').close());
+function selectTheme(theme){document.documentElement.dataset.theme=theme;localStorage.setItem('love-theme',theme);document.querySelectorAll('.theme-option').forEach(button=>button.classList.toggle('active',button.dataset.theme===theme))}
+$('#themeBtn').onclick=()=>{$('#themeModal').showModal();selectTheme(document.documentElement.dataset.theme)};
+document.querySelectorAll('.theme-option').forEach(button=>button.onclick=()=>{selectTheme(button.dataset.theme);$('#themeModal').close();toast('主题颜色已切换')});
 $('#loginBtn').onclick=()=>$('#loginModal').showModal();
 $('#loginForm').onsubmit=async e=>{e.preventDefault();try{await api('/auth/login',{method:'POST',body:JSON.stringify({username:$('#loginUsername').value,password:$('#loginPassword').value})});$('#loginPassword').value='';$('#loginModal').close();await refreshAuth();await Promise.all([loadCouple(),loadAnniversaries(),loadMessages(),loadWishes()]);toast('登录成功')}catch(err){toast(err.message)}};
 $('#logoutBtn').onclick=async()=>{await api('/auth/logout',{method:'POST'});await refreshAuth();await Promise.all([loadAnniversaries(),loadMessages(),loadWishes()]);toast('已退出，当前为游客模式')};

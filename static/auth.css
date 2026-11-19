@@ -14,3 +14,21 @@ dialog label select { display: block; width: 100%; margin-top: 7px; border: 1px 
 .date-picker input::-webkit-calendar-picker-indicator { position: absolute; width: 0; height: 0; opacity: 0; pointer-events: none; }
 .date-arrow { color: var(--rose); font-size: 18px; line-height: 1; transform: translateY(-2px); }
 @media (max-width: 760px) { .date-picker { min-width: 160px; height: 44px; padding: 0 11px; } .date-icon { display: none; } }
+:root, :root[data-theme="blue"] { --rose:#578bd8; --theme-dark:#356bb9; --theme-light:#eaf3ff; --theme-glow:#dbeaff; }
+:root[data-theme="pink"] { --rose:#e96d86; --theme-dark:#d95875; --theme-light:#fff0f3; --theme-glow:#fde1e5; }
+:root[data-theme="purple"] { --rose:#9671d5; --theme-dark:#7652b8; --theme-light:#f3edff; --theme-glow:#e9ddff; }
+:root[data-theme="green"] { --rose:#55a986; --theme-dark:#368468; --theme-light:#eaf8f2; --theme-glow:#d9f2e7; }
+.primary,.track i { background:linear-gradient(135deg,var(--rose),var(--theme-dark)); }
+.date-icon { background:linear-gradient(135deg,var(--rose),var(--theme-dark)); }
+.avatar,.date-badge,.form-foot select { background:var(--theme-light); }
+.blobs i:nth-child(1),.blobs i:nth-child(3) { background:var(--theme-glow); }
+.theme-trigger { white-space:nowrap; }
+.theme-dialog { padding:34px; position:relative; }
+.theme-dialog h3 { margin:0 0 24px; font-size:23px; }
+.theme-options { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
+.theme-option { position:relative; display:grid; grid-template-columns:38px 1fr; align-items:center; gap:11px; padding:14px; border:2px solid var(--line); border-radius:15px; background:#fff; color:var(--dark); text-align:left; }
+.theme-option:hover,.theme-option.active { border-color:var(--rose); background:var(--theme-light); }
+.theme-option i { width:38px; height:38px; border-radius:12px; box-shadow:inset 0 0 0 1px rgba(0,0,0,.04); }
+.theme-option[data-theme="blue"] i { background:#578bd8; }.theme-option[data-theme="pink"] i { background:#e96d86; }.theme-option[data-theme="purple"] i { background:#9671d5; }.theme-option[data-theme="green"] i { background:#55a986; }
+.theme-option span { font-weight:600; }.theme-option b { position:absolute; right:8px; top:6px; color:var(--rose); font-size:9px; font-weight:500; }
+@media (max-width:760px) { .theme-trigger { font-size:0; }.theme-trigger::first-letter { font-size:14px; }.theme-options { grid-template-columns:1fr; } }
