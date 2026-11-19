@@ -1,0 +1,9 @@
+.account { display: flex; align-items: center; gap: 8px; }
+.account span { font-size: 12px; color: var(--muted); }
+.guest .auth-only, .guest .delete { display: none !important; }
+body:not(.guest) #loginBtn { display: none; }
+dialog label select { display: block; width: 100%; margin-top: 7px; border: 1px solid var(--line); border-radius: 11px; padding: 12px; font: inherit; color: var(--dark); background: #fff; }
+.login-tip { font-size: 12px; color: var(--muted); line-height: 1.7; }
+.guest .composer textarea, .guest .composer select, .guest .composer button,
+.guest .mood-card input, .guest .mood-card button, .guest .wish-item input { pointer-events: none; opacity: .62; }
+@media (max-width: 760px) { .account span { display: none; } .account .ghost { padding: 8px 12px; } }

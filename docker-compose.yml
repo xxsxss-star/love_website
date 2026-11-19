@@ -5,9 +5,11 @@ services:
     restart: unless-stopped
     ports:
       - "8000:8000"
+    environment:
+      ADMIN1_PASSWORD: ${ADMIN1_PASSWORD:-admin1}
+      ADMIN2_PASSWORD: ${ADMIN2_PASSWORD:-admin2}
     volumes:
       - love-data:/app/data
 
 volumes:
   love-data:
-
